@@ -4,7 +4,7 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/fi
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 // Função de criar usuário
-async function criarUsuario(email, senha, nome) {
+export async function criarUsuario(email, senha, nome) {
   try {
     // 1️⃣ Cria no Firebase Auth
     const userCred = await createUserWithEmailAndPassword(auth, email, senha);
