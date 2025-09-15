@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./teste.js" defer type="module"></script>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./teste.js" defer type="module"></script>
+  <title>Autenticação Firebase</title>
 </head>
 <body>
-    <h1>testando o caralho lá</h1>
+  <h1>Autenticação Firebase</h1>
 
-    <form id="formCadastro">
-        <input type="text" id="nome" placeholder="Nome" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="senha" placeholder="Senha" required />
+  <form id="formCadastro">
+    <input type="text" id="nome" placeholder="Nome" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="senha" placeholder="Senha" required />
     <button type="submit">Criar usuário</button>
-    </form>
+  </form>
 
-    <script type="module">
-        import { criarUsuario } from "./teste.js";
+  <hr>
 
-        const form = document.getElementById("formCadastro");
+  <!-- Botão Google -->
+  <button id="btnGoogle">Entrar com Google</button>
 
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-                const nome = document.getElementById("nome").value;
-                const email = document.getElementById("email").value;
-                const senha = document.getElementById("senha").value;
-            criarUsuario(email, senha, nome);
-        });
-    </script>
+  <script type="module">
+    import { criarUsuario, loginGoogle } from "./teste.js";
+
+    const form = document.getElementById("formCadastro");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+      criarUsuario(email, senha, nome);
+    });
+
+    // Botão Google
+    document.getElementById("btnGoogle").addEventListener("click", () => {
+      loginGoogle();
+    });
+  </script>
 </body>
 </html>
