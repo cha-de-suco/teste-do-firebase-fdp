@@ -1,6 +1,6 @@
 // main.js
 import { db, auth } from "./firebase.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 // Função de criar usuário
@@ -12,7 +12,7 @@ export async function criarUsuario(email, senha, nome) {
     console.log("Usuário registrado:", user.uid);
 
     // 2️⃣ Salva dados extras no Firestore
-    await addDoc(collection(db, "usuarios"), {
+    await setDoc(doc(db, "usuarios", user.uid), {
       uid: user.uid,
       nome: nome,
       email: email,
@@ -23,6 +23,3 @@ export async function criarUsuario(email, senha, nome) {
     console.error("Erro ao criar usuário:", err.message);
   }
 }
-
-// Exemplo de uso
-// criarUsuario("carlos@email.com", "123456", "Carlos");
