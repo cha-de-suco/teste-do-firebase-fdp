@@ -1,24 +1,28 @@
 // main.js
-import { db } from "./firebase.js";
-import { collection, addDoc, getDocs } 
-  from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { db, auth } from "./firebase.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-// exemplo: salvar
-async function salvarUsuario() {
-  await addDoc(collection(db, "usuarios"), {
-    nome: "Carlos",
-    idade: 25
-  });
-  console.log("Usuário salvo!");
+// Função de criar usuário
+async function criarUsuario(email, senha, nome) {
+  try {
+    // 1️⃣ Cria no Firebase Auth
+    const userCred = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCred.user;
+    console.log("Usuário registrado:", user.uid);
+
+    // 2️⃣ Salva dados extras no Firestore
+    await addDoc(collection(db, "usuarios"), {
+      uid: user.uid,
+      nome: nome,
+      email: email,
+      criadoEm: new Date()
+    });
+    console.log("Usuário salvo no Firestore!");
+  } catch (err) {
+    console.error("Erro ao criar usuário:", err.message);
+  }
 }
 
-// exemplo: ler
-async function listarUsuarios() {
-  const snapshot = await getDocs(collection(db, "usuarios"));
-  snapshot.forEach(doc => {
-    console.log(doc.id, " => ", doc.data());
-  });
-}
-
-salvarUsuario();
-listarUsuarios();
+// Exemplo de uso
+// criarUsuario("carlos@email.com", "123456", "Carlos");

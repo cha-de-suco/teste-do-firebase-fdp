@@ -9,6 +9,25 @@
 <body>
     <h1>testando o caralho lá</h1>
 
-    <button type="button" onclick="">testat</button>
+    <form id="formCadastro">
+        <input type="text" id="nome" placeholder="Nome" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="senha" placeholder="Senha" required />
+    <button type="submit">Criar usuário</button>
+    </form>
+
+    <script type="module">
+        import { criarUsuario } from "./main.js";
+
+        const form = document.getElementById("formCadastro");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+                const nome = document.getElementById("nome").value;
+                const email = document.getElementById("email").value;
+                const senha = document.getElementById("senha").value;
+            criarUsuario(email, senha, nome);
+        });
+    </script>
 </body>
 </html>
