@@ -1,4 +1,3 @@
-
 import { db, auth } from "./firebase.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { 
@@ -7,7 +6,6 @@ import {
   signInWithPopup 
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-// Função de criar usuário com email/senha
 export async function criarUsuario(email, senha, nome) {
   try {
     const userCred = await createUserWithEmailAndPassword(auth, email, senha);
@@ -26,7 +24,6 @@ export async function criarUsuario(email, senha, nome) {
   }
 }
 
-// Função de login com Google
 export async function loginGoogle() {
   try {
     const provider = new GoogleAuthProvider();
@@ -35,14 +32,13 @@ export async function loginGoogle() {
 
     console.log("Login Google:", user.displayName, user.email);
 
-    // Salvar no Firestore (se ainda não existir)
     await setDoc(doc(db, "usuarios", user.uid), {
       uid: user.uid,
       nome: user.displayName,
       email: user.email,
       foto: user.photoURL,
       criadoEm: new Date()
-    }, { merge: true }); // merge evita sobrescrever caso já exista
+    }, { merge: true });
 
     console.log("Usuário Google salvo no Firestore!");
   } catch (err) {
